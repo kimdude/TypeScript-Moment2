@@ -26,6 +26,40 @@ function createToDo(): void {
   }
 }
 
+//Displaying list
 function displayList(list: toDoObject[]): void {
-  console.log(list);
+  const listSection = document.getElementById("toDoList") as HTMLElement;
+  listSection.innerHTML = "";
+  
+  for(let i = 0; i < list.length; i++) {
+    const article: HTMLElement = document.createElement("article");
+
+    if(list[i].priority === 1) {
+      article.classList.add("veryImportant");
+    } else if(list[i].priority === 2) {
+      article.classList.add("important");
+    }
+
+    const task = list[i].task;
+    const taskNode = document.createTextNode(task)
+    const check: HTMLButtonElement = document.createElement("button");
+
+    check.addEventListener("click", function() {
+      updateList(i);
+    })
+
+    if(list[i].completed === true ) {
+      check.classList.add("done")
+    }
+
+    listSection.appendChild(article);
+    article.appendChild(taskNode);
+    article.appendChild(check);
+  }
+}
+
+//Updating list after finished task
+function updateList(index: number): void {
+  fullList.markToDoCompleted(index);
+  displayList(fullList.getToDos());
 }
