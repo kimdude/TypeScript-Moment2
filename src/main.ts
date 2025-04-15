@@ -12,7 +12,7 @@ const fullList = new toDoList;
 
 //Fetching list on page load
 window.onload = (): void => {
-  const currentList = fullList.getToDos();
+  const currentList: toDoObject[] = fullList.getToDos();
   displayList(currentList);
 }
 
@@ -38,7 +38,7 @@ function createToDo(): void {
     error.innerHTML = "";
     toDoInput.value = "";
 
-    const currentList = fullList.getToDos();
+    const currentList: toDoObject[] = fullList.getToDos();
     
     displayList(currentList);
   } else {
@@ -49,7 +49,7 @@ function createToDo(): void {
 //Displaying list
 function displayList(currentList: toDoObject[]): void {
 
-  const list = currentList.sort((a,b) => a.priority - b.priority);
+  const list: toDoObject[] = currentList.sort((a,b) => a.priority - b.priority);
 
   const listSection = document.getElementById("toDoList") as HTMLElement;
   const completedSection = document.getElementById("finishedTasks") as HTMLElement;
@@ -65,8 +65,8 @@ function displayList(currentList: toDoObject[]): void {
       article.classList.add("important");
     }
 
-    const task = list[i].task;
-    const taskNode = document.createTextNode(task)
+    const task: string = list[i].task;
+    const taskNode: Text = document.createTextNode(task);
     const check: HTMLButtonElement = document.createElement("button");
 
     check.addEventListener("click", function() {
