@@ -1,9 +1,66 @@
+/* General design*/
+body {
+  margin: 0px;
+  background-color: rgb(223, 217, 210);
+}
+
+main {
+  width: 80%;
+  margin: 0px auto;
+  padding: 40px 0px;
+  background-color: rgb(252, 248, 243);
+}
+
+section {
+  width: 80%;
+  margin: 2% auto;
+  padding: 20px 0px;
+}
+
+/* Inputs design */
+#inputs {
+  display: block;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Buttons design */
+#addItem, #clearList {
+  background-color: #f8c9dd;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+}
+
+#addItem {
+  margin-left: 20px;
+}
+
+#clearList {
+  display: block;
+  margin-left: auto;
+  margin-right: 40px;
+}
+
+.done {
+  background-color: #cdd629;
+  border: 7px solid #fff;
+}
+
+/* Tasks design */
 article {
   display: flex;
-  width: 80%;
+  margin: 20px 0;
   padding: 20px 5%;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
   border-radius: 15px;
   align-items: center;
+  background-color: #ceeaee;
+}
+
+#finishedTasks > article {
+  background-color: #ceeaee !important;
 }
 
 article > button {
@@ -14,14 +71,18 @@ article > button {
   border: none;
 }
 
-.done {
-  background-color: aquamarine;
-}
-
 .veryImportant {
-  background-color: rgb(247, 89, 89);
+  background-color: #ee417e;
 }
 
 .important {
-  background-color: rgb(247, 152, 89);
+  background-color: #f39a26;
+}
+
+@media screen and (max-width: 600px) {
+  main { width: 100%; }
+}
+
+@media screen and (max-width: 460px) {
+  #addItem { display: block; margin: 10px auto; }
 }

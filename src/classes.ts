@@ -17,11 +17,16 @@ export class toDoObject implements toDo {
 //Class for toDo-list
 export class toDoList {
     toDos: toDoObject[] = [];
+
+    constructor() {
+        this.toDos = this.loadFromLocalStorage();
+    }
   
     //Adds item to todo-list
     addToDo(item: toDoObject): boolean {
       if (item.task && item.priority) { 
         this.toDos.push(item);
+
         return true
       } else {
         return false
@@ -30,8 +35,11 @@ export class toDoList {
 
     //Marks item completed and changes priority
     markToDoCompleted(toDoIndex: number): void {
-        this.toDos[toDoIndex].completed = true;
-        this.toDos[toDoIndex].priority = 0;
+        if(this.toDos[toDoIndex].completed === false) {
+            this.toDos[toDoIndex].completed = true;
+        } else {
+            this.toDos[toDoIndex].completed = false;
+        }
     }
 
     //Returns todo-list
@@ -57,27 +65,3 @@ export class toDoList {
         this.toDos.length = 0;
     }
 }
-
-/**
- * export class localStorage {
- * 
- * constructor (itemName: string): any {
- * 
- *      saveToLocalStorage(): void {
-            const jsonStr = JSON.stringify(this.toDos);
-            localStorage.setItem(itemName, jsonStr);
-        }
-
-        loadFromLocalStorage(): any {
-            const storedTasks: toDoObject[] = JSON.parse(localStorage.getItem(itemName) ?? "[]");
-            return storedTasks;
-        }
-
-        clearLocalStorage(): void {
-            localStorage.clear();
-            this.toDos.length = 0;
-        }
-    }
- * }
- * }
- */
