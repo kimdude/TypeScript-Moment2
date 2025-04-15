@@ -4,32 +4,60 @@ import { toDoObject } from "./classes";
 
 //Fetching HTML-elements
 const addBtn = document.getElementById("addItem") as HTMLButtonElement;
+const error = document.getElementById("errorMessage") as HTMLButtonElement;
+const clearBtn = document.getElementById("clearList") as HTMLButtonElement;
 
-//Adding eventlistener
+//Creating todo-list
+const fullList = new toDoList;
+
+//Fetching list on page load
+window.onload = (): void => {
+  const storedList: toDoObject[] = fullList.loadFromLocalStorage();
+  storedList.forEach(listItem => fullList.addToDo(listItem));
+
+  const currentList = fullList.getToDos();
+  const sortedList = currentList.sort((a,b) => a.priority - b.priority);
+  
+  displayList(sortedList);
+}
+
+//Adding todo-item on click
 addBtn.addEventListener("click", function() {
   createToDo();
 })
 
-//Creating todo-list
-const fullList = new toDoList;
+//Clearing list on click
+clearBtn.addEventListener("click", function() {
+  fullList.clearLocalStorage();
+  displayList(fullList.getToDos());
+})
 
 //Function creating todo-items
 function createToDo(): void {
   const toDoInput = document.getElementById("toDoInput") as HTMLInputElement;
   const priorityInput = document.getElementById("priorityInput") as HTMLInputElement;
-
-  if(toDoInput.value && priorityInput.value) {
-    const newToDo = new toDoObject(toDoInput.value, false, parseInt(priorityInput.value));
+  const newToDo = new toDoObject(toDoInput.value, false, parseInt(priorityInput.value));
     
-    fullList.addToDo(newToDo);
-    displayList(fullList.getToDos());
+  const added = fullList.addToDo(newToDo);
+  if(added === true) {
+    error.innerHTML = "";
+    toDoInput.value = "";
+
+    const currentList = fullList.getToDos();
+    const sortedList = currentList.sort((a,b) => a.priority - b.priority);
+    
+    displayList(sortedList);
+  } else {
+    error.innerHTML = "Beskriv uppgiften och välj en prioritetsgrad 1-3";
   }
 }
 
 //Displaying list
 function displayList(list: toDoObject[]): void {
   const listSection = document.getElementById("toDoList") as HTMLElement;
+  const completedSection = document.getElementById("finishedTasks") as HTMLElement;
   listSection.innerHTML = "";
+  completedSection.innerHTML = "";
   
   for(let i = 0; i < list.length; i++) {
     const article: HTMLElement = document.createElement("article");
@@ -49,17 +77,24 @@ function displayList(list: toDoObject[]): void {
     })
 
     if(list[i].completed === true ) {
-      check.classList.add("done")
+      check.classList.add("done");
+      completedSection.appendChild(article);
+    } else {
+      listSection.appendChild(article);
     }
 
-    listSection.appendChild(article);
     article.appendChild(taskNode);
     article.appendChild(check);
   }
+
+  //Saving list to localStorage
+  fullList.saveToLocalStorage();
+
 }
 
 //Updating list after finished task
 function updateList(index: number): void {
   fullList.markToDoCompleted(index);
+
   displayList(fullList.getToDos());
 }

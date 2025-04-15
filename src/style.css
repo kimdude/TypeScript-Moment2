@@ -1,7 +1,27 @@
-.veryImportant {
-  background-color: rgb(247, 89, 89);
+article {
+  display: flex;
+  width: 80%;
+  padding: 20px 5%;
+  border-radius: 15px;
+  align-items: center;
+}
+
+article > button {
+  height: 40px;
+  width: 40px;
+  margin-left: auto;
+  border-radius: 10px;
+  border: none;
 }
 
 .done {
   background-color: aquamarine;
+}
+
+.veryImportant {
+  background-color: rgb(247, 89, 89);
+}
+
+.important {
+  background-color: rgb(247, 152, 89);
 }
